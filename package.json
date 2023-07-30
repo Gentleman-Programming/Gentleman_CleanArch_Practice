@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/application/index.js",
     "build": "tsc -p tsconfig.json",
-    "dev": "nodemon -L --watch ./dist --nolazy ./dist/applications/index.js",
+    "watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
