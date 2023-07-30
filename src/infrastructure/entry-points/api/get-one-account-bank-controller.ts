@@ -7,13 +7,22 @@ export class GetOneAccountBankController implements IController {
     constructor(private readonly accountService: IAccountService) {}
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
+        console.log("Looger Controller Get One Account Controller", request);
         try {
             const { id } = request.body;   
              
             const result = await this.accountService.getOne(id);
+            console.log("Logger Controller Get One Account after return service", result);
 
-            if (!result) throw new Error("Account not found");
+            if (!result){ 
+                console.log("Logger Controller Get One Account after return service", new Error("Account not found"))
+                throw new Error("Account not found");
+            }
             
+            console.log("Logger Controller Get One Account result", {
+                status: StatusStates.SUCCESS, 
+                body: "Bank Account user found",
+            });
 
             return {
                 status: StatusStates.SUCCESS, 

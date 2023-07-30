@@ -6,13 +6,23 @@ export class BankServiceImpl implements IAccountService {
     
     constructor(private readonly accountRepository: IAccountRepository) {}
 
+    async addOne(account: AddAccountParams): Promise<AccountEntity | boolean> {
+        
+        if(account.age < 18){ 
+            console.log("Logger Service Add Account validate business rule", false);
+            return false;
+        }
 
-    async addOne(account: AddAccountParams): Promise<AccountEntity> {
+        console.log("Logger Service Add Account", account);
         return await this.accountRepository.addOne(account);
     }
 
     async getOne (id: string): Promise<AccountEntity | boolean> {
+        console.log("Logger Service Get One Account", id);
+
         const resource = await this.accountRepository.getOne(id);
+        console.log("Logger Service after Get One Account", resource);
+
         return resource ?? false;
     }
 }

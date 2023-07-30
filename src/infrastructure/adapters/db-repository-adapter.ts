@@ -1,17 +1,31 @@
-import { AccountEntity } from "../../domain/entities/account";
+import { AccountEntity, AddAccountParams } from "../../domain/entities/account";
 import { IAccountRepository } from "../../domain/entities/contract/account-repository";
+
+const listOfAccounts = new Map<string, AccountEntity>();
 
 export class DbRepositoryAdapter implements IAccountRepository {
 
-    private listOfAccounts = new Map<string, AccountEntity>();
+    async addOne(account: AddAccountParams): Promise<AccountEntity> {
+        let idCounter = 0;
+        idCounter++;
+        const idx = idCounter.toString();
+        const mockResource: AccountEntity = {
+            id: idx,
+            name: account.name,
+            lastName: account.lastName,
+            age: account.age,
+        }
+        console.log("Logger Repository", account)
+        listOfAccounts.set(idx, mockResource);
+        console.log("Logger Map after adding", listOfAccounts);
 
-    async addOne(account: any): Promise<AccountEntity> {
-        this.listOfAccounts.set(account.id, account);
-        return account;
+        return mockResource;
     }
 
     async getOne(id: string): Promise<AccountEntity | boolean> {
-        const resource = this.listOfAccounts.get(id);
+        console.log("Logger Repository Get One", id);
+        const resource = listOfAccounts.get(id);
+        console.log("Logger Map after getting", resource);
         return resource ? resource : false;
     }
 }
