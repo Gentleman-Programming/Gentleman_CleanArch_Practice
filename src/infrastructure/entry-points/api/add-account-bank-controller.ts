@@ -2,8 +2,10 @@ import { StatusStates } from "../utils"
 import { IAccountService } from "../../../domain/use-cases/contract/account-service";
 import { HttpRequest, HttpResponse, IController } from "../../contracts/controller";
 
+// Clase que se comunica con la capa de aplicacion por medio de la abstraccion IController
 export class AddAccountBankController implements IController {
   
+  // Inyectamos la abtraccion que se ha implementado en el caso de uso en la capa del dominio
   constructor(private readonly accountService: IAccountService) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {

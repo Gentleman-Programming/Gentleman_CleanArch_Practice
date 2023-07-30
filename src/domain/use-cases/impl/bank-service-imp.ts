@@ -2,8 +2,11 @@ import { IAccountService } from "../contract/account-service";
 import { AccountEntity, AddAccountParams } from "../../entities/account";
 import { IAccountRepository } from "../../entities/contract/account-repository";
 
+// Esta clase implementa el contrato de la capa de dominio
 export class BankServiceImpl implements IAccountService {
     
+    // Hacemos la comunicacion con la capa de infraestructura por medio de una abstraccion
+    // aplicando el principio de inversion de dependencias
     constructor(private readonly accountRepository: IAccountRepository) {}
 
     async addOne(account: AddAccountParams): Promise<AccountEntity | boolean> {
