@@ -1,8 +1,8 @@
-import { IController } from "../infrastructure/contracts/controller";
 import { StatusStates } from "../infrastructure/entry-points/utils";
+import { HttpRequest, HttpResponse, IController } from "../infrastructure/contracts/controller";
 
 export const adapterController = (controller: IController) => {
-    return async (req: any, res?: any) => {
+    return async (req: HttpRequest, res?: HttpResponse) => {
         const httpResquest = {
             body: req.body
         }
@@ -10,9 +10,9 @@ export const adapterController = (controller: IController) => {
         const httpResponse = await controller.handle(httpResquest);
 
         if(StatusStates.SUCCESS) {
-            res.status(httpResponse.status).json(httpResponse.body);
+            httpResponse.status = StatusStates.SUCCESS;
         }
 
-       return res.status(StatusStates.FAILED).json({error: httpResponse.body.message});
+       return httpResponse.status = StatusStates.FAILED;
     }
 }
