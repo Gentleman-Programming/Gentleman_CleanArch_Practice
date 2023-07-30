@@ -1,6 +1,6 @@
-import { AccountEntity } from "../../entities/account";
+import { AccountEntity, AddAccountParams } from "../../entities/account";
 
 export interface IAccountService {
-    addOne: (account: AccountEntity | unknown) => Promise<AccountEntity>;
+    addOne: (account: AddAccountParams) => Promise<AccountEntity>;
     getOne: (id: string) => Promise<AccountEntity | boolean | unknown>;
 }
