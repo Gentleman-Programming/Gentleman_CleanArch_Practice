@@ -1,0 +1,37 @@
+import { StatusStates } from "../utils";
+import { IAccountService } from "../../../domain/use-cases/contract/account-service";
+import { HttpRequest, HttpResponse, IController } from "../../contracts/controller";
+
+// Clase que se comunica con la capa de aplicacion por medio de la abstraccion IController
+export class GetOneAccountBankController implements IController {
+
+    // Inyectamos la abtraccion que se ha implementado en el caso de uso en la capa del dominio
+    constructor(private readonly accountService: IAccountService) {}
+
+    async handle(request: HttpRequest): Promise<HttpResponse> {
+        console.log("Looger Controller Get One Account Controller", request);
+        try {
+            const { id } = request.body;   
+             
+            const result = await this.accountService.getOne(id);
+            console.log("Logger Controller Get One Account after return service", result);
+
+            if (!result){ 
+                console.log("Logger Controller Get One Account after return service", new Error("Account not found"))
+                throw new Error("Account not found");
+            }
+            
+            console.log("Logger Controller Get One Account result", {
+                status: StatusStates.SUCCESS, 
+                body: "Bank Account user found",
+            });
+
+            return {
+                status: StatusStates.SUCCESS, 
+                body: "Bank Account user found",
+            }
+        } catch (error) {
+            throw new Error(error);
+        }
+    }      
+}
