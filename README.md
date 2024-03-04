@@ -1,5 +1,6 @@
 # Gentleman_CleanArch_Practice
-  ```typescript
+
+```typescript
 // EXTERNA -> FRAMEWORK / DRIVER / UI -> Detalles de implementacion
 // MOCKS -> STUBS
 
@@ -29,7 +30,7 @@ interface DBBankInterface {
 class DBBank implements DBBankInterface {
   listOfAccounts = new Map<string, BankAccount>();
 
-  constructor() { }
+  constructor() {}
 
   addOne(bdUser: DBBankAccount) {
     this.listOfAccounts.set(bdUser.id, bdUser.data);
@@ -47,7 +48,7 @@ class DBBank implements DBBankInterface {
         message: `couldn't find the bankAccount user`,
       };
     }
-return { status: StatusStates.SUCCESS, message: "bankAccount user found" };
+    return { status: StatusStates.SUCCESS, message: "bankAccount user found" };
   }
 }
 
@@ -62,7 +63,7 @@ interface DBBankAdapterInterface {
 }
 
 class DBAdapter implements DBBankAdapterInterface {
-  constructor(private readonly db: DBBank) { }
+  constructor(private readonly db: DBBank) {}
 
   addOne(user: User) {
     const newBankAccount = new BankAccount(user);
@@ -74,14 +75,14 @@ class DBAdapter implements DBBankAdapterInterface {
   }
 
   getOne(id: string) {
-    return this.getOne(id);
+    return this.db.getOne(id);
   }
 }
 
 // USE CASES -> Reglas de aplicación
 
 class App {
-  constructor(private readonly dbAdapter: DBBankAdapterInterface) { }
+  constructor(private readonly dbAdapter: DBBankAdapterInterface) {}
   register(user: User) {
     try {
       this.dbAdapter.addOne(user);
